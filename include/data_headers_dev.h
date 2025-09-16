@@ -66,17 +66,25 @@ __device__ inline wave_header_t::wave_header_t(uint64_t exec, uint64_t data_size
   cu_id = (cu_se_reg >> 8) & 0xf;
 
 #if defined(__gfx906__)
+#pragma message("Building device code for gfx906")
   arch = gcnarch::gfx906;
 #elif defined(__gfx908__)
+#pragma message("Building device code for gfx908")
   arch = gcnarch::gfx908;
 #elif defined(__gfx90a__)
+#pragma message("Building device code for gfx90a")
   arch = gcnarch::gfx90a;
 #elif defined(__gfx940__)
+#pragma message("Building device code for gfx940")
   arch = gcnarch::gfx940;
 #elif defined(__gfx941__)
+#pragma message("Building device code for gfx941")
   arch = gcnarch::gfx941;
 #elif defined(__gfx942__)
+#pragma message("Building device code for gfx942")
   arch = gcnarch::gfx942;
+#elif !defined(__host__)
+#error Unsupported GPU architecture, update data_headers_dev.h
 #endif
 }
 
