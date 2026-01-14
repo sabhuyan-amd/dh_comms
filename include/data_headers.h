@@ -30,6 +30,8 @@ namespace dh_comms {
 struct wave_header_t {
   uint64_t exec; //!< Execution mask of the wavefront submitting the message.
 
+  uint64_t location_id;
+
   uint64_t data_size : 62;        //!< \brief Size of the data following the wave header.
                                   //!<
                                   //!< This is computed as: (number of active lanes) * (lane header (4 bytes) +
@@ -65,6 +67,10 @@ struct wave_header_t {
   uint16_t block_idx_x;  //!< blockIdx.x value of the workgroup to which the wave belongs.
   uint16_t block_idx_y;  //!< blockIdx.y value of the workgroup to which the wave belongs.
   uint16_t block_idx_z;  //!< blockIdx.z value of the workgroup to which the wave belongs.
+  uint32_t num_blocks_x;
+  uint32_t num_blocks_y;
+  uint32_t num_blocks_z;
+  uint64_t wg_id;
   uint16_t wave_num : 4; //!< Wave number withing workgroup; there can be at most 16 waves per workgroup.
   uint16_t xcc_id : 4;   //!< \brief Number of the XCC on which the wavefront runs; zero for pre-MI300 hardware
                          //!<
