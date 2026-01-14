@@ -32,6 +32,7 @@ __device__ inline wave_header_t::wave_header_t(uint64_t exec, uint64_t data_size
                                                uint64_t dwarf_fname_hash, uint32_t dwarf_line, uint32_t dwarf_column,
                                                uint32_t user_type, uint32_t user_data)
     : exec(exec),
+      location_id(location_id),
       data_size(data_size),
       is_vector_message(is_vector_message),
       has_lane_headers(has_lane_headers),
@@ -44,6 +45,12 @@ __device__ inline wave_header_t::wave_header_t(uint64_t exec, uint64_t data_size
       block_idx_x(blockIdx.x),
       block_idx_y(blockIdx.y),
       block_idx_z(blockIdx.z),
+      num_blocks_x(gridDim.x),
+      num_blocks_y(gridDim.y),
+      num_blocks_z(gridDim.z),
+      wg_id(blockIdx.z * gridDim.y * gridDim.x +
+                       blockIdx.y * gridDim.x +
+                       blockIdx.x),
       wave_num(__wave_num()),
       active_lane_count(active_lane_count),
       arch(gcnarch::unsupported) { // We'll check if the arch is supported in the constructor body.
